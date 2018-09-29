@@ -52,7 +52,7 @@ public abstract class MyCallback<T extends ResultCode> implements Callback<T> {
 
         } else {//失败响应
             LogUtil.info(TAG, "失败响应");
-            onFailure(call, new RuntimeException("response error,detail = " + response.raw().toString()));
+            onFail(response.body().getMessage());
         }
     }
 

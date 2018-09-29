@@ -354,7 +354,7 @@ public class MainActivity extends BaseActivity implements ICallBack {
     public void setSuccess(Object message) {
         String msg = String.valueOf(message);
 
-        if ("0".equals(msg)) {
+        if ("3".equals(msg)) {
             //比对成功
             ToastUtil.showLongToastTop("比对成功");
             SerialApplication.LOCK_STATUS = 1;
@@ -374,6 +374,6 @@ public class MainActivity extends BaseActivity implements ICallBack {
 
     @Override
     public void setFailure(Object message) {
-//        ToastUtil.showLongToastTop("错误！！！");
+        ToastUtil.showLongToastTop("错误！！！");
     }
 }

@@ -54,7 +54,7 @@ public class SendOperaModel {
                 if ("200".equals(response.body().getCode())) {
                     LogUtil.info(TAG, response.body().getMessage());
                     LogUtil.info(TAG, response.body().getCode());
-                    callback.setSuccess("0");
+                    callback.setSuccess("3");
                 } else {
                     callback.setFailure(response.body().getMessage());
                 }
