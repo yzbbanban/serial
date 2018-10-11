@@ -292,8 +292,8 @@ public class MainActivity extends BaseActivity implements ICallBack {
             public void onClick(View view) {
 //                ToastUtil.showShortToast("Add");
                 String name = etDialogName.getText().toString().trim();
-                if ("".equals(name)) {
-                    ToastUtil.showShortToast("请输入");
+                if ("".equals(name) || name.split(",").length < 5) {
+                    ToastUtil.showShortToast("请输入正确格式：如 P0TTT,30111111,2017.06.29,20,2017.06.29");
                 } else {
                     //比对
                     bucket.setName(name);
