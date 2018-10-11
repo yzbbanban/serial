@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -77,6 +78,7 @@ public class MainActivity extends BaseActivity implements ICallBack {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initData();
         initView();
 
@@ -358,7 +360,7 @@ public class MainActivity extends BaseActivity implements ICallBack {
             //比对成功
             ToastUtil.showLongToastTop("比对成功");
             SerialApplication.LOCK_STATUS = 1;
-            
+
         } else if ("1".equals(msg)) {
             //开锁
             ToastUtil.showLongToastTop("开锁成功");
@@ -374,6 +376,6 @@ public class MainActivity extends BaseActivity implements ICallBack {
 
     @Override
     public void setFailure(Object message) {
-        ToastUtil.showLongToastTop("错误！！！");
+        ToastUtil.showLongToastTop("" + message);
     }
 }
