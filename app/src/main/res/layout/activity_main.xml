@@ -74,7 +74,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/login_selector"
-                android:text="1~8"
+                android:text="A1~A14"
                 android:textColor="@color/colorWhite"
                 android:textSize="16sp" />
 
@@ -88,7 +88,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/login_selector"
-                android:text="9~16"
+                android:text="B1~B11"
                 android:textColor="@color/colorWhite"
                 android:textSize="16sp" />
 
@@ -102,21 +102,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/login_selector"
-                android:text="17~24"
-                android:textColor="@color/colorWhite"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/btn_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/login_selector"
-                android:text="25~32"
+                android:text="C1~C7"
                 android:textColor="@color/colorWhite"
                 android:textSize="16sp" />
 

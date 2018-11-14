@@ -51,8 +51,6 @@ public class MainActivity extends BaseActivity implements ICallBack {
     Button btn2;
     @BindView(R.id.btn_3)
     Button btn3;
-    @BindView(R.id.btn_4)
-    Button btn4;
     @BindView(R.id.bac)
     LinearLayout bac;
 
@@ -60,12 +58,10 @@ public class MainActivity extends BaseActivity implements ICallBack {
     private List<Bucket> dataList1;
     private List<Bucket> dataList2;
     private List<Bucket> dataList3;
-    private List<Bucket> dataList4;
 
     private GridViewAdapter adapter1;
     private GridViewAdapter adapter2;
     private GridViewAdapter adapter3;
-    private GridViewAdapter adapter4;
 
     private AlertDialog.Builder builder;
 
@@ -99,32 +95,39 @@ public class MainActivity extends BaseActivity implements ICallBack {
 
     @Override
     protected void initData() {
+        //P01~P14改为A-1~A-14，P15~P25改为B-1~B11，P26~P32改为C-1~C-7
         dataList1 = new ArrayList<>();
         dataList2 = new ArrayList<>();
         dataList3 = new ArrayList<>();
-        dataList4 = new ArrayList<>();
         for (int i = 0; i < 32; i++) {
 
             Bucket bucket = new Bucket();
             String name = "";
-            if (i < 9) {
-                name = "P0" + (i + 1);
+            if (i <= 13) {
+                //i=0~13
+                if (i<=9){
+                    name = "A0" + (i + 1);
+                }else {
+                    name = "A" + (i + 1);
+                }
+            } else if (i <=24) {
+                //i=14~24
+                name = "B" + (i - 13);
             } else {
-                name = "P" + (i + 1);
+                //i=25~32
+                name = "C" + (i - 24);
             }
             bucket.setId(i + 1);
             bucket.setIdName(name);
             bucket.setExplain(name);
             bucket.setUpdateTime(System.currentTimeMillis() / 1000);
             bucket.setStatus(0);
-            if (i < 8) {
+            if (i <= 13) {
                 dataList1.add(bucket);
-            } else if (i >= 8 && i < 16) {
+            } else if (i <=24) {
                 dataList2.add(bucket);
-            } else if (i >= 16 && i < 24) {
-                dataList3.add(bucket);
             } else {
-                dataList4.add(bucket);
+                dataList3.add(bucket);
             }
         }
         sendOperaModel = new SendOperaModel();
@@ -154,20 +157,12 @@ public class MainActivity extends BaseActivity implements ICallBack {
         gvBucket4.setVisibility(View.GONE);
     }
 
-    @OnClick(R.id.btn_4)
-    public void setBtn4() {
-        gvBucket1.setVisibility(View.GONE);
-        gvBucket2.setVisibility(View.GONE);
-        gvBucket3.setVisibility(View.GONE);
-        gvBucket4.setVisibility(View.VISIBLE);
-    }
 
     @Override
     protected void initView() {
         adapter1 = new GridViewAdapter(this, dataList1);
         adapter2 = new GridViewAdapter(this, dataList2);
         adapter3 = new GridViewAdapter(this, dataList3);
-        adapter4 = new GridViewAdapter(this, dataList4);
 
         gvBucket1.setAdapter(adapter1);
 
@@ -203,16 +198,7 @@ public class MainActivity extends BaseActivity implements ICallBack {
             }
         });
 
-        gvBucket4.setAdapter(adapter4);
 
-        gvBucket4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View view, int position,
-                                    long arg3) {
-                Bucket bucket = dataList4.get(position);
-                invokeBucket(bucket);
-            }
-        });
     }
 
     /**
