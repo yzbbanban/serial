@@ -105,12 +105,12 @@ public class MainActivity extends BaseActivity implements ICallBack {
             String name = "";
             if (i <= 13) {
                 //i=0~13
-                if (i<=9){
+                if (i <= 9) {
                     name = "A0" + (i + 1);
-                }else {
+                } else {
                     name = "A" + (i + 1);
                 }
-            } else if (i <=24) {
+            } else if (i <= 24) {
                 //i=14~24
                 name = "B" + (i - 13);
             } else {
@@ -124,7 +124,7 @@ public class MainActivity extends BaseActivity implements ICallBack {
             bucket.setStatus(0);
             if (i <= 13) {
                 dataList1.add(bucket);
-            } else if (i <=24) {
+            } else if (i <= 24) {
                 dataList2.add(bucket);
             } else {
                 dataList3.add(bucket);
@@ -302,6 +302,8 @@ public class MainActivity extends BaseActivity implements ICallBack {
             @Override
             public void onClick(View view) {
                 int status = SerialApplication.LOCK_STATUS;
+                //不做状态比对
+                status = 1;
                 if (status == 0) {
                     ToastUtil.showLongToast("请先比对！！！");
                 } else {
@@ -318,6 +320,7 @@ public class MainActivity extends BaseActivity implements ICallBack {
             @Override
             public void onClick(View view) {
                 int status = SerialApplication.LOCK_STATUS;
+                status = 1;
                 if (status == 0) {
                     ToastUtil.showLongToast("请先比对！！！");
                 } else {
