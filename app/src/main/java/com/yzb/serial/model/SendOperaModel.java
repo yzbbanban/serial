@@ -19,10 +19,10 @@ public class SendOperaModel {
 
     private static final String TAG = "SendOperaModel";
 
-    public void send(Bucket bucket, final ICallBack callback) {
+    public void send(Bucket bucket, String isStatus, final ICallBack callback) {
         final int status = bucket.getStatus();
         SendService request = RetrofitUtils.getRetrofit(SerialApplication.URL).create(SendService.class);
-        Call<ResultCode<ResultCode>> call = request.call("" + bucket.getId(), status == 1 ? "O" : "C");
+        Call<ResultCode<ResultCode>> call = request.call("" + bucket.getId(), status == 1 ? "O" : "C", isStatus);
         call.enqueue(new MyCallback<ResultCode<ResultCode>>() {
             @Override
             public void onSuc(Response<ResultCode<ResultCode>> response) {

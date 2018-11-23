@@ -301,16 +301,16 @@ public class MainActivity extends BaseActivity implements ICallBack {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int status = SerialApplication.LOCK_STATUS;
+                int isStatus = SerialApplication.LOCK_STATUS;
                 //不做状态比对
-                status = 1;
-                if (status == 0) {
-                    ToastUtil.showLongToast("请先比对！！！");
-                } else {
-                    ToastUtil.showShortToast("关锁中。。。");
-                    bucket.setStatus(0);
-                    sendOperaModel.send(bucket, MainActivity.this);
-                }
+//                status = 1;
+//                if (status == 0) {
+                ToastUtil.showLongToast("请先比对！！！");
+//                } else {
+                ToastUtil.showShortToast("关锁中。。。");
+                bucket.setStatus(0);
+                sendOperaModel.send(bucket, "" + isStatus, MainActivity.this);
+//                }
 
             }
         });
@@ -319,15 +319,15 @@ public class MainActivity extends BaseActivity implements ICallBack {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int status = SerialApplication.LOCK_STATUS;
-                status = 1;
-                if (status == 0) {
-                    ToastUtil.showLongToast("请先比对！！！");
-                } else {
-                    ToastUtil.showShortToast("开锁中。。。");
-                    bucket.setStatus(1);
-                    sendOperaModel.send(bucket, MainActivity.this);
-                }
+                int isStatus = SerialApplication.LOCK_STATUS;
+//                status = 1;
+//                if (status == 0) {
+//                    ToastUtil.showLongToast("请先比对！！！");
+//                } else {
+                ToastUtil.showShortToast("开锁中。。。");
+                bucket.setStatus(1);
+                sendOperaModel.send(bucket, "" + isStatus, MainActivity.this);
+//                }
 
             }
         });

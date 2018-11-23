@@ -16,6 +16,6 @@ import retrofit2.http.Query;
 public interface SendService {
     @POST("json")
     @FormUrlEncoded
-    Call<ResultCode<ResultCode>> call(@Field("id") String id,@Field("status") String status);
+    Call<ResultCode<ResultCode>> call(@Field("id") String id, @Field("status") String status, @Field("isStatus") String isStatus);
 //    Call<ResultCode<ResultCode>> call(@Query("bucket") String bucket);
 }
