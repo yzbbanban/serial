@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:enabled="true"
-            android:text="P0TTT,30111111,2017.06.29,20,2017.06.29"
+            android:text=""
             android:background="@drawable/edit_shape"
             android:padding="10dp" />
 
