@@ -11,6 +11,7 @@ public class SerialApplication extends Application {
     public static String URL = "";
     public static String USER_NAME = "";
     public static int LOCK_STATUS = 0;
+    public static int UNLOCK_STATUS = 0;
 
 
     public static boolean isOnAppStore = false;

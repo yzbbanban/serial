@@ -320,14 +320,15 @@ public class MainActivity extends BaseActivity implements ICallBack {
             @Override
             public void onClick(View view) {
                 int isStatus = SerialApplication.LOCK_STATUS;
-//                status = 1;
-//                if (status == 0) {
-//                    ToastUtil.showLongToast("请先比对！！！");
-//                } else {
-                ToastUtil.showShortToast("开锁中。。。");
-                bucket.setStatus(1);
-                sendOperaModel.send(bucket, "" + isStatus, MainActivity.this);
-//                }
+                int status = SerialApplication.UNLOCK_STATUS;
+                status = 1;
+                if (status == 0) {
+                    ToastUtil.showLongToast("请先比对！！！");
+                } else {
+                    ToastUtil.showShortToast("开锁中。。。");
+                    bucket.setStatus(1);
+                    sendOperaModel.send(bucket, "" + isStatus, MainActivity.this);
+                }
 
             }
         });
