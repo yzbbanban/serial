@@ -52,6 +52,7 @@ public class GridViewAdapter extends BaseAdapter {
         }
 
         viewHolder.tvId.setText(t.getIdName());
+        viewHolder.tv.setText(t.getExplain());
         return convertView;
     }
 
@@ -61,7 +62,7 @@ public class GridViewAdapter extends BaseAdapter {
 
         public ViewHolder(View convertView) {
             tvId = convertView.findViewById(R.id.tv_item_id);
-//            tv = convertView.findViewById(R.id.tv_item_name);
+            tv = convertView.findViewById(R.id.tv_item_explain);
         }
     }
 }

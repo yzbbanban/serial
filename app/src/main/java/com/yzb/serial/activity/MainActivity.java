@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.yzb.serial.R;
 import com.yzb.serial.adapter.GridViewAdapter;
 import com.yzb.serial.app.SerialApplication;
@@ -75,7 +76,6 @@ public class MainActivity extends BaseActivity implements ICallBack {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        initData();
         initView();
 
     }
@@ -96,40 +96,53 @@ public class MainActivity extends BaseActivity implements ICallBack {
     @Override
     protected void initData() {
         //P01~P14改为A-1~A-14，P15~P25改为B-1~B11，P26~P32改为C-1~C-7
-        dataList1 = new ArrayList<>();
-        dataList2 = new ArrayList<>();
-        dataList3 = new ArrayList<>();
-        for (int i = 0; i < 32; i++) {
+
+//        for (int i = 0; i < 32; i++) {
+//
+//            Bucket bucket = new Bucket();
+//            String name = "";
+//            if (i <= 13) {
+//                //i=0~13
+//                if (i <= 9) {
+//                    name = "A0" + (i + 1);
+//                } else {
+//                    name = "A" + (i + 1);
+//                }
+//            } else if (i <= 24) {
+//                //i=14~24
+//                name = "B" + (i - 13);
+//            } else {
+//                //i=25~32
+//                name = "C" + (i - 24);
+//            }
+//            bucket.setId(i + 1);
+//            bucket.setIdName(name);
+//            bucket.setExplain(name);
+//            bucket.setUpdateTime(System.currentTimeMillis() / 1000);
+//            bucket.setStatus(0);
+//            if (i <= 13) {
+//                dataList1.add(bucket);
+//            } else if (i <= 24) {
+//                dataList2.add(bucket);
+//            } else {
+//                dataList3.add(bucket);
+//            }
+//        }
+
+        for (int i = 0; i < 9; i++) {
 
             Bucket bucket = new Bucket();
             String name = "";
-            if (i <= 13) {
-                //i=0~13
-                if (i <= 9) {
-                    name = "A0" + (i + 1);
-                } else {
-                    name = "A" + (i + 1);
-                }
-            } else if (i <= 24) {
-                //i=14~24
-                name = "B" + (i - 13);
-            } else {
-                //i=25~32
-                name = "C" + (i - 24);
-            }
+            name = "" + (i + 1) + "号站";
+            String explain = "" + (i + 1) + "号站";
             bucket.setId(i + 1);
             bucket.setIdName(name);
-            bucket.setExplain(name);
+            bucket.setExplain(explain);
             bucket.setUpdateTime(System.currentTimeMillis() / 1000);
             bucket.setStatus(0);
-            if (i <= 13) {
-                dataList1.add(bucket);
-            } else if (i <= 24) {
-                dataList2.add(bucket);
-            } else {
-                dataList3.add(bucket);
-            }
+            dataList1.add(bucket);
         }
+        SharedPreModel.saveBucket(this, new Gson().toJson(dataList1));
         sendOperaModel = new SendOperaModel();
     }
 
@@ -160,6 +173,18 @@ public class MainActivity extends BaseActivity implements ICallBack {
 
     @Override
     protected void initView() {
+        dataList1 = new ArrayList<>();
+        dataList2 = new ArrayList<>();
+        dataList3 = new ArrayList<>();
+
+        dataList1 = SharedPreModel.getBucket(this);
+        if (dataList1 == null || dataList1.size() == 0) {
+            initData();
+        } else {
+            adapter1 = new GridViewAdapter(this, dataList1);
+
+        }
+
         adapter1 = new GridViewAdapter(this, dataList1);
         adapter2 = new GridViewAdapter(this, dataList2);
         adapter3 = new GridViewAdapter(this, dataList3);
@@ -175,6 +200,19 @@ public class MainActivity extends BaseActivity implements ICallBack {
                 invokeBucket(bucket);
             }
         });
+
+
+        gvBucket1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Bucket bucket = dataList1.get(position);
+
+                invokeBucketName(bucket, position);
+                return true;
+            }
+        });
+
 
         gvBucket2.setAdapter(adapter2);
 
@@ -198,6 +236,57 @@ public class MainActivity extends BaseActivity implements ICallBack {
             }
         });
 
+
+    }
+
+    private void invokeBucketName(final Bucket bucket, final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View v = getLayoutInflater().inflate(R.layout.edit_name_dialog, null);
+        builder.setView(v);
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        Button btnAdd = v.findViewById(R.id.btn_dialog_add);
+        Button btnCancel = v.findViewById(R.id.btn_dialog_cancel);
+        ImageButton ibtnClose = v.findViewById(R.id.ibtn_dialog_close);
+        final EditText etDialogIp = v.findViewById(R.id.et_dialog_ip);
+
+
+        if (StringUtil.isNotBlank(bucket.getExplain())) {
+            etDialogIp.setText(bucket.getExplain());
+        }
+
+        //添加或更新
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                ToastUtil.showShortToast("Add");
+                String name = etDialogIp.getText().toString().trim();
+                if ("".equals(name)) {
+                    ToastUtil.showShortToast("请输入");
+                } else {
+                    bucket.setExplain(name);
+                    dataList1.set(position, bucket);
+                    SharedPreModel.saveBucket(MainActivity.this, new Gson().toJson(dataList1));
+                    initView();
+                    alertDialog.dismiss();
+                }
+
+            }
+        });
+        //取消
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ToastUtil.showShortToast("Cancel");
+                alertDialog.dismiss();
+            }
+        });
+        ibtnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
 
     }
 

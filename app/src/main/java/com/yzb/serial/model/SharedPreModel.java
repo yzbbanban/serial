@@ -4,8 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.yzb.serial.entity.ApiInfo;
+import com.yzb.serial.entity.Bucket;
 import com.yzb.serial.entity.User;
+
+import java.util.List;
+import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -62,6 +68,35 @@ public class SharedPreModel {
         String url = preferences.getString("url", "");
         ApiInfo apiInfo = new ApiInfo(ip, url);
         return apiInfo;
+    }
+
+    /**
+     * 保存bucket 信息
+     *
+     * @param context    context
+     * @param bucketList bucketList
+     */
+    public static void saveBucket(Context context, String bucketList) {
+        SharedPreferences.Editor editor = context.getSharedPreferences("bucket", MODE_PRIVATE).edit();
+        editor.putString("bucket", bucketList);
+        editor.commit();
+    }
+
+    /**
+     * 获取 bucket 信息
+     *
+     * @return bucket 信息
+     */
+    public static List<Bucket> getBucket(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("bucket", MODE_PRIVATE);
+        String buckets = preferences.getString("bucket", "");
+
+        List<Bucket> bucketList = new Gson().fromJson(buckets, new TypeToken<List<Bucket>>() {
+        }.getType());
+        if (bucketList == null) {
+            return new ArrayList<>();
+        }
+        return bucketList;
     }
 
 }
