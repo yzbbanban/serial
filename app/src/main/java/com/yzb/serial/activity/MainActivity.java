@@ -321,7 +321,6 @@ public class MainActivity extends BaseActivity implements ICallBack {
             public void onClick(View view) {
                 int isStatus = SerialApplication.LOCK_STATUS;
                 int status = SerialApplication.UNLOCK_STATUS;
-                status = 1;
                 if (status == 0) {
                     ToastUtil.showLongToast("请先比对！！！");
                 } else {
@@ -350,13 +349,14 @@ public class MainActivity extends BaseActivity implements ICallBack {
             //比对成功
             ToastUtil.showLongToastTop("比对成功");
             SerialApplication.LOCK_STATUS = 1;
+            SerialApplication.UNLOCK_STATUS = 1;
 
         } else if ("1".equals(msg)) {
             //开锁
             ToastUtil.showLongToastTop("开锁成功");
             alertDialog.dismiss();
             SerialApplication.LOCK_STATUS = 0;
-
+            SerialApplication.UNLOCK_STATUS = 0;
         } else {
             ToastUtil.showLongToastTop("关锁成功");
             alertDialog.dismiss();
