@@ -365,8 +365,10 @@ public class MainActivity extends BaseActivity implements ICallBack {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                try {
+
 //                ToastUtil.showShortToast("Add");
-                String name = etDialogName.getText().toString().trim();
+                    String name = etDialogName.getText().toString().trim();
 //                if ("".equals(name) || name.split(",").length < 5) {
 //                    ToastUtil.showShortToast("请输入正确格式：如 P0TTT,30111111,2017.06.29,20,2017.06.29");
 //                } else {
@@ -384,22 +386,31 @@ public class MainActivity extends BaseActivity implements ICallBack {
                     sendOperaModel.compare(bucket, MainActivity.this);
 //                }
 
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
         });
         //关锁
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int isStatus = SerialApplication.LOCK_STATUS;
-                //不做状态比对
-//                status = 1;
-//                if (status == 0) {
-                ToastUtil.showLongToast("请先比对！！！");
-//                } else {
-                ToastUtil.showShortToast("关锁中。。。");
-                bucket.setStatus(0);
-                sendOperaModel.send(bucket, "" + isStatus, MainActivity.this);
-//                }
+                try {
+                    int isStatus = SerialApplication.LOCK_STATUS;
+//                    int status = SerialApplication.UNLOCK_STATUS;
+                    //不做状态比对
+//                    status = 1;
+//                    if (status == 0) {
+//                        ToastUtil.showLongToast("请先比对！！！");
+//                    } else {
+                    ToastUtil.showShortToast("关锁中。。。");
+                    bucket.setStatus(0);
+                    sendOperaModel.send(bucket, "" + isStatus, MainActivity.this);
+//                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -408,16 +419,19 @@ public class MainActivity extends BaseActivity implements ICallBack {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int isStatus = SerialApplication.LOCK_STATUS;
-                int status = SerialApplication.UNLOCK_STATUS;
-                if (status == 0) {
-                    ToastUtil.showLongToast("请先比对！！！");
-                } else {
-                    ToastUtil.showShortToast("开锁中。。。");
-                    bucket.setStatus(1);
-                    sendOperaModel.send(bucket, "" + isStatus, MainActivity.this);
+                try {
+                    int isStatus = SerialApplication.LOCK_STATUS;
+                    int status = SerialApplication.UNLOCK_STATUS;
+                    if (status == 0) {
+                        ToastUtil.showLongToast("请先比对！！！");
+                    } else {
+                        ToastUtil.showShortToast("开锁中。。。");
+                        bucket.setStatus(1);
+                        sendOperaModel.send(bucket, "" + isStatus, MainActivity.this);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-
             }
         });
 
