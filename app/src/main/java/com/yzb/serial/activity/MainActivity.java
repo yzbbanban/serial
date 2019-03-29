@@ -143,7 +143,6 @@ public class MainActivity extends BaseActivity implements ICallBack {
             dataList1.add(bucket);
         }
         SharedPreModel.saveBucket(this, new Gson().toJson(dataList1));
-        sendOperaModel = new SendOperaModel();
     }
 
     @OnClick(R.id.btn_1)
@@ -173,6 +172,8 @@ public class MainActivity extends BaseActivity implements ICallBack {
 
     @Override
     protected void initView() {
+        sendOperaModel = new SendOperaModel();
+
         dataList1 = new ArrayList<>();
         dataList2 = new ArrayList<>();
         dataList3 = new ArrayList<>();
@@ -259,10 +260,10 @@ public class MainActivity extends BaseActivity implements ICallBack {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                ToastUtil.showShortToast("Add");
+//                ToastUtil.ToastShow("Add");
                 String name = etDialogIp.getText().toString().trim();
                 if ("".equals(name)) {
-                    ToastUtil.showShortToast("请输入");
+                    ToastUtil.ToastShow("请输入");
                 } else {
                     bucket.setExplain(name);
                     dataList1.set(position, bucket);
@@ -277,7 +278,7 @@ public class MainActivity extends BaseActivity implements ICallBack {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtil.showShortToast("Cancel");
+                ToastUtil.ToastShow("Cancel");
                 alertDialog.dismiss();
             }
         });
@@ -313,10 +314,10 @@ public class MainActivity extends BaseActivity implements ICallBack {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                ToastUtil.showShortToast("Add");
+//                ToastUtil.ToastShow("Add");
                 String ip = etDialogIp.getText().toString().trim();
                 if ("".equals(ip)) {
-                    ToastUtil.showShortToast("请输入");
+                    ToastUtil.ToastShow("请输入");
                 } else {
                     SerialApplication.URL = "http://" + ip + ":8888/app/";
                     Log.i(TAG, "onClick: " + SerialApplication.URL);
@@ -330,7 +331,7 @@ public class MainActivity extends BaseActivity implements ICallBack {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtil.showShortToast("Cancel");
+                ToastUtil.ToastShow("Cancel");
                 alertDialog.dismiss();
             }
         });
@@ -367,10 +368,10 @@ public class MainActivity extends BaseActivity implements ICallBack {
             public void onClick(View view) {
                 try {
 
-//                ToastUtil.showShortToast("Add");
+//                ToastUtil.ToastShow("Add");
                     String name = etDialogName.getText().toString().trim();
 //                if ("".equals(name) || name.split(",").length < 5) {
-//                    ToastUtil.showShortToast("请输入正确格式：如 P0TTT,30111111,2017.06.29,20,2017.06.29");
+//                    ToastUtil.ToastShow("请输入正确格式：如 P0TTT,30111111,2017.06.29,20,2017.06.29");
 //                } else {
                     //比对
                     bucket.setName(name);
@@ -379,10 +380,10 @@ public class MainActivity extends BaseActivity implements ICallBack {
                     if (StringUtil.isNotBlank(apiInfo.getIp())) {
                         SerialApplication.URL = "http://" + apiInfo.getIp() + ":8888/app/";
                     } else {
-                        ToastUtil.showLongToast("请先设置 ip");
+                        ToastUtil.ToastShow("请先设置 ip");
                         alertDialog.dismiss();
                     }
-                    ToastUtil.showLongToastTop("比对中");
+                    ToastUtil.ToastShow("比对中");
                     sendOperaModel.compare(bucket, MainActivity.this);
 //                }
 
@@ -402,9 +403,9 @@ public class MainActivity extends BaseActivity implements ICallBack {
                     //不做状态比对
 //                    status = 1;
 //                    if (status == 0) {
-//                        ToastUtil.showLongToast("请先比对！！！");
+//                        ToastUtil.ToastShow("请先比对！！！");
 //                    } else {
-                    ToastUtil.showShortToast("关锁中。。。");
+                    ToastUtil.ToastShow("关锁中。。。");
                     bucket.setStatus(0);
                     sendOperaModel.send(bucket, "" + isStatus, MainActivity.this);
 //                    }
@@ -423,9 +424,9 @@ public class MainActivity extends BaseActivity implements ICallBack {
                     int isStatus = SerialApplication.LOCK_STATUS;
                     int status = SerialApplication.UNLOCK_STATUS;
                     if (status == 0) {
-                        ToastUtil.showLongToast("请先比对！！！");
+                        ToastUtil.ToastShow("请先比对！！！");
                     } else {
-                        ToastUtil.showShortToast("开锁中。。。");
+                        ToastUtil.ToastShow("开锁中。。。");
                         bucket.setStatus(1);
                         sendOperaModel.send(bucket, "" + isStatus, MainActivity.this);
                     }
@@ -450,18 +451,18 @@ public class MainActivity extends BaseActivity implements ICallBack {
 
         if ("3".equals(msg)) {
             //比对成功
-            ToastUtil.showLongToastTop("比对成功");
+            ToastUtil.ToastShow("比对成功");
             SerialApplication.LOCK_STATUS = 1;
             SerialApplication.UNLOCK_STATUS = 1;
 
         } else if ("1".equals(msg)) {
             //开锁
-            ToastUtil.showLongToastTop("开锁成功");
+            ToastUtil.ToastShow("开锁成功");
             alertDialog.dismiss();
             SerialApplication.LOCK_STATUS = 0;
             SerialApplication.UNLOCK_STATUS = 0;
         } else {
-            ToastUtil.showLongToastTop("关锁成功");
+            ToastUtil.ToastShow("关锁成功");
             alertDialog.dismiss();
             SerialApplication.LOCK_STATUS = 0;
         }
@@ -469,6 +470,6 @@ public class MainActivity extends BaseActivity implements ICallBack {
 
     @Override
     public void setFailure(Object message) {
-        ToastUtil.showLongToastTop("" + message);
+        ToastUtil.ToastShow("" + message);
     }
 }

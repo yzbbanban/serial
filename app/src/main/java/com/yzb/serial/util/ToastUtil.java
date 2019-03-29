@@ -1,8 +1,13 @@
 package com.yzb.serial.util;
 
+import android.os.Looper;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.yzb.serial.R;
 import com.yzb.serial.app.SerialApplication;
 
 
@@ -112,4 +117,26 @@ public class ToastUtil {
             toast.show();
         }
     }
+//
+//    /**
+//     * 显示
+//     */
+//    public static void ToastShow(String msg) {
+//        View view = LayoutInflater.from(SerialApplication.getAppContext()).inflate(R.layout.toast_tms, null);
+//        TextView text = (TextView) view.findViewById(R.id.textToast);
+//        if (toast == null) {
+//            toast = new Toast(SerialApplication.getAppContext());
+//            toast.setGravity(Gravity.TOP, 0, 0);
+//        }
+//        text.setText(msg);
+//        toast.setDuration(Toast.LENGTH_SHORT); // Toast显示的时间
+//        toast.setView(view);
+//        toast.show();
+//    }
+
+    public static void ToastShow(String msg) {
+
+        Toast.makeText(SerialApplication.getAppContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
 }

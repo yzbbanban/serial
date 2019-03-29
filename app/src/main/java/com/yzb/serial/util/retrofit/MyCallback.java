@@ -25,7 +25,7 @@ public abstract class MyCallback<T extends ResultCode> implements Callback<T> {
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
         Log.i(TAG, "onResponse: " + response.body());
-        ToastUtil.showLongToastTop("onResponse: " + response.body());
+//        ToastUtil.ToastShow("onResponse: " + response.body());
         if (response.raw().code() == 200) {//200是服务器有合理响应
             LogUtil.info(TAG, "code: " + response.body().getCode());
             if (response.body().getCode().equals(ServiceResult.GET_MESSAGE_SUCCESS.getIndex())) {//正常
@@ -59,7 +59,7 @@ public abstract class MyCallback<T extends ResultCode> implements Callback<T> {
     @Override
     public void onFailure(Call<T> call, Throwable t) {//网络问题会走该回调
         LogUtil.info(TAG, "code failure: " + t.getMessage());
-        ToastUtil.showLongToastTop("onFailure: " + printStackTraceToString(t));
+//        ToastUtil.ToastShow("onFailure: " + printStackTraceToString(t));
         if (t instanceof SocketTimeoutException) {
             //
         } else if (t instanceof ConnectException) {
